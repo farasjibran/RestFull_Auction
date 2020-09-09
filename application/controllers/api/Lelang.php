@@ -9,8 +9,6 @@ class Lelang extends RestController
 
 	/**
 	 * Get All Data from this method.
-	 *
-	 * @return Response
 	 */
 	public function __construct()
 	{
@@ -20,24 +18,34 @@ class Lelang extends RestController
 
 	/**
 	 * Get All Data from this method.
-	 *
-	 * @return Response
 	 */
 	public function index_get($id = 0)
 	{
 		if (!empty($id)) {
 			$data = $this->db->get_where("tb_barang", ['id_barang' => $id])->row_array();
+			if ($data) {
+				$this->response($data, 200);
+			} else {
+				$this->response([
+					'status' => 404,
+					'message' => 'No data were found'
+				], 404);
+			}
 		} else {
 			$data = $this->db->get("tb_barang")->result();
+			if ($data) {
+				$this->response($data, 200);
+			} else {
+				$this->response([
+					'status' => 404,
+					'message' => 'No data were found'
+				], 404);
+			}
 		}
-
-		$this->response($data, RestController::HTTP_OK);
 	}
 
 	/**
 	 * Get All Data from this method.
-	 *
-	 * @return Response
 	 */
 	public function index_post()
 	{
@@ -50,8 +58,6 @@ class Lelang extends RestController
 
 	/**
 	 * Get All Data from this method.
-	 *
-	 * @return Response
 	 */
 	public function index_put($id)
 	{
@@ -64,8 +70,6 @@ class Lelang extends RestController
 
 	/**
 	 * Get All Data from this method.
-	 *
-	 * @return Response
 	 */
 	public function index_delete($id)
 	{
